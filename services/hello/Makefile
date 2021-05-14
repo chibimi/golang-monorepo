@@ -1,7 +1,7 @@
 VERSION ?= $(shell git describe --tags --always --dirty --match=v* 2> /dev/null || cat $(CURDIR)/.version 2> /dev/null || echo v0)
 BLDVER = module:$(MODULE),version:$(VERSION),build:$(shell date +"%Y%m%d.%H%M%S.%N.%z")
 BASE = $(CURDIR)
-MODULE = samplesvc
+MODULE = hello
 
 .PHONY: all $(MODULE)
 all: version $(MODULE)
@@ -18,12 +18,12 @@ $(BASE):
 custom: docker deploy
 
 docker:
-	cp $(BASE)/services/samplesvc/dockerfile.samplesvc $(BASE)/
-	docker build -f dockerfile.samplesvc --rm -t $(MODULE):$(CIRCLE_SHA1) --build-arg version="$(BLDVER)" .
+	cp $(BASE)/services/hello/dockerfile.hello $(BASE)/
+	docker build -f dockerfile.hello --rm -t $(MODULE):$(CIRCLE_SHA1) --build-arg version="$(BLDVER)" .
 
 deploy:
-	@chmod +x $(BASE)/services/samplesvc/deploy.sh
-	NAME=$(MODULE) $(BASE)/services/samplesvc/deploy.sh
+	@chmod +x $(BASE)/services/hello/deploy.sh
+	NAME=$(MODULE) $(BASE)/services/hello/deploy.sh
 
 .PHONY: clean version list
 clean:
