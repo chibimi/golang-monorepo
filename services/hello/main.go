@@ -29,6 +29,7 @@ var (
 )
 
 func init() {
+	fmt.Println("HELLO!")
 	rootCmd.AddCommand(RunCmd())
 	flag.CommandLine.AddGoFlagSet(goflag.CommandLine)
 }
